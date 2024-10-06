@@ -4,7 +4,7 @@
 
 ### Supported Platforms
 
-Written in [Swift](https://developer.apple.com/documentation/swift) 6 for Apple stuff:
+Written in [Swift](https://developer.apple.com/swift) 6 for Apple stuff:
 
 * [macOS](https://developer.apple.com/macos) 15 Sequoia
 * [iOS](https://developer.apple.com/ios)/[iPadOS](https://developer.apple.com/ipad)/[tvOS](https://developer.apple.com/tvos) 18
