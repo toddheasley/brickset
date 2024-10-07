@@ -12,7 +12,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5CBF7A502CB3439100DA2CE6 /* BricksetApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BricksetApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CBF7A502CB3439100DA2CE6 /* Brickset.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Brickset.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -47,7 +47,7 @@
 		5CBF7A512CB3439100DA2CE6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5CBF7A502CB3439100DA2CE6 /* BricksetApp.app */,
+				5CBF7A502CB3439100DA2CE6 /* Brickset.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -76,7 +76,7 @@
 				5CDD9A0D2CB34465003ED0D0 /* Brickset */,
 			);
 			productName = BricksetApp;
-			productReference = 5CBF7A502CB3439100DA2CE6 /* BricksetApp.app */;
+			productReference = 5CBF7A502CB3439100DA2CE6 /* Brickset.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -279,7 +279,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 15.1;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.toddheasley.brickset;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Brickset;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -317,7 +318,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 15.1;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.toddheasley.brickset;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Brickset;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
