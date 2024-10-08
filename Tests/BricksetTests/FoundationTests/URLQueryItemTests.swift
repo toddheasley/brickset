@@ -50,18 +50,18 @@ struct URLQueryItemTests {
     }
     
     @Test func userHash() throws {
-        URLCredentialStorage.shared.userHash = ("toddheasley", "P@ssw0rd")
-        #expect(try URLQueryItem.userHash() == URLQueryItem(name: "userHash", value: "P@ssw0rd"))
-        URLCredentialStorage.shared.userHash = nil
+        try URLCredentialStorage.shared.setUserHash("H@SH", username: "toddheasley")
+        #expect(try URLQueryItem.userHash() == URLQueryItem(name: "userHash", value: "H@SH"))
+        try URLCredentialStorage.shared.setUserHash(nil)
         #expect(throws: Error.self) {
             _ = try URLQueryItem.userHash()
         }
     }
     
     @Test func apiKey() throws {
-        URLRequest.apiKey = URLRequest.testAPIKey
+        try URLCredentialStorage.shared.setAPIKey("3-26cC-J3gUn-63bi")
         #expect(try URLQueryItem.apiKey() == URLQueryItem(name: "apiKey", value: "3-26cC-J3gUn-63bi"))
-        URLRequest.apiKey = nil
+        try URLCredentialStorage.shared.setAPIKey(nil)
         #expect(throws: Error.self) {
             _ = try URLQueryItem.apiKey()
         }

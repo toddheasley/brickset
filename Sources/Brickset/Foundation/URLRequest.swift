@@ -1,13 +1,6 @@
 import Foundation
 
 extension URLRequest {
-    nonisolated(unsafe) public static var apiKey: String? {
-        didSet {
-            guard let apiKey, apiKey.isEmpty else { return }
-            Self.apiKey = nil
-        }
-    }
-    
     public static func checkKey() throws -> Self {
         try Self("checkKey")
     }

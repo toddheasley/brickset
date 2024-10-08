@@ -15,7 +15,7 @@ extension URLSession {
         guard let hash: String = jsonObject["hash"] as? String else {
             throw URLError(.cannotDecodeContentData)
         }
-        URLCredentialStorage.shared.userHash = (username, hash)
+        try URLCredentialStorage.shared.setUserHash(hash, username: username)
     }
     
     public func checkUserHash() async throws {

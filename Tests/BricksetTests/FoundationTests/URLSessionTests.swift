@@ -3,54 +3,40 @@ import Testing
 import Foundation
 
 struct URLSessionTests {
-    static var isEnabled: ConditionTrait {
-        .enabled(if: apiKey != URLRequest.testAPIKey && !username.isEmpty && !password.isEmpty)
-    }
-    
-    init() {
-        URLRequest.apiKey = Self.apiKey
-    }
-    
-    private static let apiKey: String = URLRequest.testAPIKey
-    private static let username: String = ""
-    private static let password: String = ""
-}
-
-extension URLSessionTests {
     @Test(isEnabled) func checkKey() async throws {
         try #require(try await URLSession.shared.checkKey())
-        URLRequest.apiKey = nil
+        try URLCredentialStorage.shared.setAPIKey(nil)
         await #expect(throws: Error.self) {
             try await URLSession.shared.checkKey()
         }
     }
     
     @Test(isEnabled) func login() async throws {
-        URLCredentialStorage.shared.userHash = nil
-        try #require(try await URLSession.shared.login(Self.username, password: Self.password))
-        #expect(URLCredentialStorage.shared.userHash?.name == "toddheasley")
+        try URLCredentialStorage.shared.setUserHash(nil)
+        try #require(try await URLSession.shared.login(username, password: password))
+        #expect(URLCredentialStorage.shared.userHash?.username == "toddheasley")
         #expect(!(URLCredentialStorage.shared.userHash?.hash.isEmpty ?? true))
         await #expect(throws: Error.self) {
-            try await URLSession.shared.login(Self.username, password: "")
+            try await URLSession.shared.login(username, password: "")
         }
-        URLRequest.apiKey = nil
+        try URLCredentialStorage.shared.setAPIKey(nil)
         await #expect(throws: Error.self) {
-            try await URLSession.shared.login(Self.username, password: Self.password)
+            try await URLSession.shared.login(username, password: password)
         }
     }
     
     @Test(isEnabled) func checkUserHash() async throws {
-        try #require(try await URLSession.shared.login(Self.username, password: Self.password))
+        try #require(try await URLSession.shared.login(username, password: password))
         try #require(try await URLSession.shared.checkUserHash())
-        URLCredentialStorage.shared.userHash?.hash = "HASH"
+        try URLCredentialStorage.shared.setUserHash("H@SH", username: username)
         await #expect(throws: Error.self) {
             try await URLSession.shared.checkUserHash()
         }
-        URLCredentialStorage.shared.userHash = nil
+        try URLCredentialStorage.shared.setUserHash(nil)
         await #expect(throws: Error.self) {
             try await URLSession.shared.checkUserHash()
         }
-        URLRequest.apiKey = nil
+        try URLCredentialStorage.shared.setAPIKey(nil)
     }
     
     @Test(isEnabled) func getKeyUsageStats() async throws {
@@ -58,7 +44,7 @@ extension URLSessionTests {
     }
     
     @Test(isEnabled) func getSets() async throws {
-        try #require(try await URLSession.shared.login(Self.username, password: Self.password))
+        try #require(try await URLSession.shared.login(username, password: password))
         let params: GetSets = GetSets(query: "train", orderBy: .YearFromDESC, pageSize: 100)
         let sets: ([Sets], Int?) = try #require(try await URLSession.shared.getSets(params))
         #expect(!sets.0.isEmpty)
@@ -102,35 +88,48 @@ extension URLSessionTests {
     }
     
     @Test(isEnabled) func setCollection() async throws {
-        try #require(try await URLSession.shared.login(Self.username, password: Self.password))
+        try #require(try await URLSession.shared.login(username, password: password))
         try #require(try await URLSession.shared.setCollection(SetCollection(own: true, notes: "Favorite LEGO set, all time", rating: 5), set: 33645))
     }
     
     @Test(isEnabled) func getUserNotes() async throws {
-        try #require(try await URLSession.shared.login(Self.username, password: Self.password))
+        try #require(try await URLSession.shared.login(username, password: password))
         let userNotes: ([UserNotes], Int?) = try #require(try await URLSession.shared.getUserNotes())
         #expect(!userNotes.0.isEmpty)
         #expect(userNotes.0.count <= userNotes.1 ?? 0)
     }
     
     @Test(isEnabled) func getMinifigCollection() async throws {
-        try #require(try await URLSession.shared.login(Self.username, password: Self.password))
+        try #require(try await URLSession.shared.login(username, password: password))
         let minifigCollection: ([MinifigCollection], Int?) = try #require(try await URLSession.shared.getMinifigCollection(GetMinifigCollection(query: "train")))
         #expect(!minifigCollection.0.isEmpty)
         #expect(minifigCollection.0.count <= minifigCollection.1 ?? 0)
     }
     
     @Test(isEnabled) func setMinifigCollection() async throws {
-        try #require(try await URLSession.shared.login(Self.username, password: Self.password))
+        try #require(try await URLSession.shared.login(username, password: password))
         try #require(try await URLSession.shared.setMinifigCollection(SetMinifigCollection(own: true), set: "col445"))
         try #require(try await URLSession.shared.setMinifigCollection(SetMinifigCollection(notes: "Favorite fig from the last series"), set: "col445"))
     }
     
     @Test(isEnabled) func getUserMinifigNotes() async throws {
-        try #require(try await URLSession.shared.login(Self.username, password: Self.password))
+        try #require(try await URLSession.shared.login(username, password: password))
         try #require(try await URLSession.shared.setMinifigCollection(SetMinifigCollection(notes: "Favorite fig from the last series"), set: "col445"))
         let userMinifigNotes: ([UserMinifigNotes], Int?) = try #require(try await URLSession.shared.getUserMinifigNotes())
         #expect(!userMinifigNotes.0.isEmpty)
         #expect(userMinifigNotes.0.count <= userMinifigNotes.1 ?? 0)
     }
+    
+    init() throws {
+        try URLCredentialStorage.shared.setAPIKey(apiKey)
+    }
 }
+
+private var isEnabled: ConditionTrait {
+    .enabled(if: apiKey != testAPIKey && !username.isEmpty && !password.isEmpty)
+}
+
+private let testAPIKey: String = "3-26cC-J3gUn-63bi"
+private let apiKey: String = testAPIKey
+private let username: String = ""
+private let password: String = ""

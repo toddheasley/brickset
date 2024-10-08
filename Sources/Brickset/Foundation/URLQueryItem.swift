@@ -56,7 +56,7 @@ extension URLQueryItem {
     }
     
     public static func apiKey() throws -> Self {
-        guard let value: String = URLRequest.apiKey else {
+        guard let value: String = URLCredentialStorage.shared.apiKey else {
             throw Error.invalidAPIKey
         }
         return Self(name: "apiKey", value: value)

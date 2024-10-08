@@ -3,22 +3,54 @@ import Testing
 import Foundation
 
 struct URLCredentialTests {
-    @Test func userHash() throws {
-        #expect(try URLCredential(user: "toddheasley", hash: "P@ssw0rd").userHash() == ("toddheasley", "P@ssw0rd"))
+    @Test func apiHash() throws {
+        #expect(try URLCredential.api("H@SH", username: "toddheasley").password == "H@SH")
+        #expect(try URLCredential.api("H@SH", username: "toddheasley").user == "toddheasley")
+        #expect(try URLCredential.api("H@SH", username: "toddheasley").persistence == .forSession)
+        #expect(throws: Error.self) {
+            try URLCredential.api("", username: "toddheasley")
+        }
+        #expect(throws: Error.self) {
+            try URLCredential.api("H@SH", username: "")
+        }
     }
     
-    @Test func userHashInit() throws {
-        #expect(try URLCredential(user: "toddheasley", hash: "P@ssw0rd") == URLCredential(user: "toddheasley", password: "P@ssw0rd", persistence: URLCredential.persistence))
+    @Test func apiKey() throws {
+        #expect(try URLCredential.api("@P1K3Y").password == "@P1K3Y")
+        #expect(try URLCredential.api("@P1K3Y").user == "api.brickset")
+        #expect(try URLCredential.api("@P1K3Y", persistence: .synchronizable).persistence == .synchronizable)
+        #expect(try URLCredential.api("@P1K3Y").persistence == .forSession)
+        #expect(throws: Error.self) {
+            try URLCredential.api("")
+        }
     }
 }
 
 struct URLCredentialStorageTests {
-    @Test func userHash() {
-        URLCredentialStorage.shared.userHash = ("toddheasley", "P@ssw0rd")
-        #expect(URLCredentialStorage.shared.userHash?.name == "toddheasley")
-        #expect(URLCredentialStorage.shared.userHash?.hash == "P@ssw0rd")
-        URLCredentialStorage.shared.userHash = nil
+    @Test func userHash() throws {
+        try URLCredentialStorage.shared.setUserHash("H@SH", username: "toddheasley")
+        #expect(URLCredentialStorage.shared.userHash?.username == "toddheasley")
+        #expect(URLCredentialStorage.shared.userHash?.hash == "H@SH")
+        try URLCredentialStorage.shared.setUserHash(nil)
         #expect(URLCredentialStorage.shared.userHash == nil)
+        try URLCredentialStorage.shared.setUserHash("H@SH", username: "toddheasley", persistence: .forSession)
+        #expect(URLCredentialStorage.shared.userHash?.username == "toddheasley")
+        #expect(URLCredentialStorage.shared.userHash?.hash == "H@SH")
+        try URLCredentialStorage.shared.setUserHash("H@SH", username: "toddheasley", persistence: .none)
+        #expect(URLCredentialStorage.shared.userHash == nil)
+    }
+    
+    @Test func apiKey() throws {
+#if os(macOS)
+        try URLCredentialStorage.shared.setAPIKey("@P1K3Y", persistence: .permanent)
+        #expect(URLCredentialStorage.shared.apiKey == "@P1K3Y")
+#endif
+        try URLCredentialStorage.shared.setAPIKey("@P1K3Y", persistence: .none)
+        #expect(URLCredentialStorage.shared.apiKey == nil)
+        try URLCredentialStorage.shared.setAPIKey("@P1K3Y")
+        #expect(URLCredentialStorage.shared.apiKey == "@P1K3Y")
+        try URLCredentialStorage.shared.setAPIKey(nil)
+        #expect(URLCredentialStorage.shared.apiKey == nil)
     }
 }
 

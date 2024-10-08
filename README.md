@@ -1,6 +1,6 @@
 # `Brickset`
 
-[Brickset API](https://brickset.com/article/52666/brickset-web-services)
+[Brickset API version 3 documentation](https://brickset.com/article/52664/api-version-3-documentation)
 
 ### Supported Platforms
 
