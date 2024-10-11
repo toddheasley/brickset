@@ -3,7 +3,7 @@ import Foundation
 extension URLCredential {
     typealias UserHash = (username: String, hash: String)
     
-    static func api(_ hash: String, username: String, persistence: Persistence = .default) throws -> Self {
+    static func api(_ hash: String, username: String, persistence: Persistence = .permanent) throws -> Self {
         guard !username.isEmpty else {
             throw Error.invalidUsernameOrPassword
         }
@@ -13,16 +13,12 @@ extension URLCredential {
         return Self(user: username, password: hash, persistence: persistence)
     }
     
-    static func api(_ apiKey: String, persistence: Persistence = .default) throws -> Self {
+    static func api(_ apiKey: String, persistence: Persistence = .forSession) throws -> Self {
         guard !apiKey.isEmpty else {
             throw Error.invalidAPIKey
         }
         return Self(user: .brickset, password: apiKey, persistence: persistence)
     }
-}
-
-extension URLCredential.Persistence {
-    static let `default`: Self = .forSession
 }
 
 extension URLCredentialStorage {
@@ -36,13 +32,13 @@ extension URLCredentialStorage {
         (credentials(for: .brickset) ?? [:]).compactMap { $0.value.user == .brickset ? $0.value.password : nil }.first
     }
     
-    func setUserHash(_ hash: String?, username: String? = nil, persistence: URLCredential.Persistence = .default) throws {
+    func setUserHash(_ hash: String?, username: String? = nil, persistence: URLCredential.Persistence = .permanent) throws {
         removeUserHashes() // Empty or nil hash clears keychain
         guard let hash, !hash.isEmpty else { return }
         set(try .api(hash, username: username ?? "", persistence: persistence), for: .brickset)
     }
     
-    func setAPIKey(_ apiKey: String?, persistence: URLCredential.Persistence = .default) throws {
+    func setAPIKey(_ apiKey: String?, persistence: URLCredential.Persistence = .forSession) throws {
         removeAPIKey() // Empty or nil key clears keychain
         guard let apiKey, !apiKey.isEmpty else { return }
         set(try .api(apiKey, persistence: persistence), for: .brickset)

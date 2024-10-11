@@ -6,7 +6,7 @@ struct URLCredentialTests {
     @Test func apiHash() throws {
         #expect(try URLCredential.api("H@SH", username: "toddheasley").password == "H@SH")
         #expect(try URLCredential.api("H@SH", username: "toddheasley").user == "toddheasley")
-        #expect(try URLCredential.api("H@SH", username: "toddheasley").persistence == .forSession)
+        #expect(try URLCredential.api("H@SH", username: "toddheasley").persistence == .permanent)
         #expect(throws: Error.self) {
             try URLCredential.api("", username: "toddheasley")
         }

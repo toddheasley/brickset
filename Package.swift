@@ -13,14 +13,14 @@ let package: Package = Package(name: "Brickset", platforms: [
         .library(name: "Brickset", targets: [
             "Brickset"
         ]),
-        .executable(name: "brickset-cli", targets: [
-            "BricksetCLI"
+        .executable(name: "brick-cli", targets: [
+            "BrickCLI"
         ])
     ], dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", branch: "main")
     ], targets: [
         .target(name: "Brickset"),
-        .executableTarget(name: "BricksetCLI", dependencies: [
+        .executableTarget(name: "BrickCLI", dependencies: [
             .product(name: "ArgumentParser", package: "swift-argument-parser"),
             "Brickset"
         ]),
