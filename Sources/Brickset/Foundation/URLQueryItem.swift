@@ -48,8 +48,9 @@ extension URLQueryItem {
         return Self(name: "password", value: value)
     }
     
-    static func userHash() throws -> Self {
-        guard let value: String = URLCredentialStorage.shared.userHash?.hash else {
+    static func userHash(isRequired: Bool = true) throws -> Self {
+        let value: String = URLCredentialStorage.shared.userHash?.hash ?? ""
+        guard !value.isEmpty || !isRequired else {
             throw Error.invalidUserHash
         }
         return Self(name: "userHash", value: value)

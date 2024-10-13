@@ -1,7 +1,7 @@
 import Foundation
 
 extension URLCredential {
-    typealias UserHash = (username: String, hash: String)
+    public typealias UserHash = (username: String, hash: String)
     
     static func api(_ hash: String, username: String, persistence: Persistence = .permanent) throws -> Self {
         guard !username.isEmpty else {
@@ -17,50 +17,50 @@ extension URLCredential {
         guard !apiKey.isEmpty else {
             throw Error.invalidAPIKey
         }
-        return Self(user: .brickset, password: apiKey, persistence: persistence)
+        return Self(user: .api, password: apiKey, persistence: persistence)
     }
 }
 
 extension URLCredentialStorage {
-    var userHash: URLCredential.UserHash? {
-        (credentials(for: .brickset) ?? [:]).compactMap {
-            $0.value.user != .brickset ? (username: $0.value.user, $0.value.password) : nil
+    public var userHash: URLCredential.UserHash? {
+        (credentials(for: .api) ?? [:]).compactMap {
+            $0.value.user != .api ? (username: $0.value.user, $0.value.password) : nil
         }.first as?  URLCredential.UserHash
     }
     
-    var apiKey: String? {
-        (credentials(for: .brickset) ?? [:]).compactMap { $0.value.user == .brickset ? $0.value.password : nil }.first
+    public var apiKey: String? {
+        (credentials(for: .api) ?? [:]).compactMap { $0.value.user == .api ? $0.value.password : nil }.first
     }
     
-    func setUserHash(_ hash: String?, username: String? = nil, persistence: URLCredential.Persistence = .permanent) throws {
+    public func setUserHash(_ hash: String?, username: String? = nil, persistence: URLCredential.Persistence = .permanent) throws {
         removeUserHashes() // Empty or nil hash clears keychain
         guard let hash, !hash.isEmpty else { return }
-        set(try .api(hash, username: username ?? "", persistence: persistence), for: .brickset)
+        set(try .api(hash, username: username ?? "", persistence: persistence), for: .api)
     }
     
-    func setAPIKey(_ apiKey: String?, persistence: URLCredential.Persistence = .forSession) throws {
+    public func setAPIKey(_ apiKey: String?, persistence: URLCredential.Persistence = .forSession) throws {
         removeAPIKey() // Empty or nil key clears keychain
         guard let apiKey, !apiKey.isEmpty else { return }
-        set(try .api(apiKey, persistence: persistence), for: .brickset)
+        set(try .api(apiKey, persistence: persistence), for: .api)
     }
     
     private func removeUserHashes() {
-        for credential in (credentials(for: .brickset) ?? [:]).values {
-            guard credential.user != .brickset else { continue }
-            remove(credential, for: .brickset)
+        for credential in (credentials(for: .api) ?? [:]).values {
+            guard credential.user != .api else { continue }
+            remove(credential, for: .api)
         }
     }
     
     private func removeAPIKey() {
-        for credential in (credentials(for: .brickset) ?? [:]).values {
-            guard credential.user == .brickset else { continue }
-            remove(credential, for: .brickset)
+        for credential in (credentials(for: .api) ?? [:]).values {
+            guard credential.user == .api else { continue }
+            remove(credential, for: .api)
         }
     }
 }
 
 extension URLProtectionSpace {
-    static let brickset: URLProtectionSpace = URLProtectionSpace(host: .brickset)
+    static let api: URLProtectionSpace = URLProtectionSpace(host: .api)
     
     private convenience init(host: String) {
         self.init(host: host, port: 0, protocol: "https", realm: nil, authenticationMethod: nil)
@@ -68,5 +68,5 @@ extension URLProtectionSpace {
 }
 
 extension String {
-    static let brickset: Self = "api.brickset"
+    static let api: Self = "api.brickset"
 }

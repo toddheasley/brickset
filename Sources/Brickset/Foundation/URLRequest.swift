@@ -24,7 +24,7 @@ extension URLRequest {
     
     static func getSets(_ params: GetSets) throws -> Self {
         try Self("getSets", query: [
-            try .userHash(),
+            try .userHash(isRequired: false), // Value is optional (but empty query parameter required?)
             try .params(params)
         ])
     }

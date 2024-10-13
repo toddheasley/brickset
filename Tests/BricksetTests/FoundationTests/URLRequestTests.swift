@@ -29,7 +29,7 @@ struct URLRequestTests {
         }
     }
     
-    @Test func checkUserHash() throws {
+    @Test(.enabled(if: isKeychainTestable)) func checkUserHash() throws {
         try URLCredentialStorage.shared.setUserHash("H@SH", username: "toddheasley")
         let request: URLRequest = try .checkUserHash()
         #expect(request.url == URL(string: "https://brickset.com/api/v3.asmx/checkUserHash?apiKey=3-26cC-J3gUn-63bi&userHash=H@SH"))
@@ -55,11 +55,10 @@ struct URLRequestTests {
     }
     
     @Test func getSets() throws {
-        try URLCredentialStorage.shared.setUserHash("H@SH", username: "toddheasley")
         let request: URLRequest = try .getSets(GetSets(setID: 567497))
-        #expect(request.url == URL(string: "https://brickset.com/api/v3.asmx/getSets?apiKey=3-26cC-J3gUn-63bi&userHash=H@SH&params=%7B'setID':567497%7D"))
+        #expect(request.url == URL(string: "https://brickset.com/api/v3.asmx/getSets?apiKey=3-26cC-J3gUn-63bi&userHash=&params=%7B'setID':567497%7D"))
         #expect(request.httpMethod == "GET")
-        #expect(try URLRequest.getSets(GetSets(query: "train", updatedSince: Date(timeIntervalSince1970: 0.0))).url == URL(string: "https://brickset.com/api/v3.asmx/getSets?apiKey=3-26cC-J3gUn-63bi&userHash=H@SH&params=%7B'query':'train','updatedSince':'1970-01-01'%7D"))
+        #expect(try URLRequest.getSets(GetSets(query: "train", updatedSince: Date(timeIntervalSince1970: 0.0))).url == URL(string: "https://brickset.com/api/v3.asmx/getSets?apiKey=3-26cC-J3gUn-63bi&userHash=&params=%7B'query':'train','updatedSince':'1970-01-01'%7D"))
         #expect(throws: Error.self) {
             _ = try URLRequest.getSets(GetSets())
         }
@@ -148,7 +147,7 @@ struct URLRequestTests {
         }
     }
     
-    @Test func setCollection() throws {
+    @Test(.enabled(if: isKeychainTestable)) func setCollection() throws {
         try URLCredentialStorage.shared.setUserHash("H@SH", username: "toddheasley")
         let request: URLRequest = try .setCollection(SetCollection(rating: 4), set: 567497)
         #expect(request.url == URL(string: "https://brickset.com/api/v3.asmx/setCollection?apiKey=3-26cC-J3gUn-63bi&userHash=H@SH&params=%7B'rating':4%7D&setID=567497"))
@@ -163,7 +162,7 @@ struct URLRequestTests {
         try URLCredentialStorage.shared.setAPIKey(nil)
     }
     
-    @Test func getUserNotes() throws {
+    @Test(.enabled(if: isKeychainTestable)) func getUserNotes() throws {
         try URLCredentialStorage.shared.setAPIKey(nil)
         try URLCredentialStorage.shared.setUserHash("H@SH", username: "toddheasley")
         #expect(throws: Error.self) {
@@ -180,7 +179,7 @@ struct URLRequestTests {
         try URLCredentialStorage.shared.setAPIKey(nil)
     }
     
-    @Test func getMinifigCollection() throws {
+    @Test(.enabled(if: isKeychainTestable)) func getMinifigCollection() throws {
         try URLCredentialStorage.shared.setUserHash("H@SH", username: "toddheasley")
         var request: URLRequest = try .getMinifigCollection(GetMinifigCollection(owned: true))
         #expect(request.url == URL(string: "https://brickset.com/api/v3.asmx/getMinifigCollection?apiKey=3-26cC-J3gUn-63bi&userHash=H@SH&params=%7B'owned':1%7D"))
@@ -196,7 +195,7 @@ struct URLRequestTests {
         try URLCredentialStorage.shared.setAPIKey(nil)
     }
     
-    @Test func setMinifigCollection() throws {
+    @Test(.enabled(if: isKeychainTestable)) func setMinifigCollection() throws {
         try URLCredentialStorage.shared.setUserHash("H@SH", username: "toddheasley")
         var request: URLRequest = try .setMinifigCollection(SetMinifigCollection(notes: "Factory sealed with misprint on package"), minifig: "567497")
         #expect(request.url == URL(string: "https://brickset.com/api/v3.asmx/setMinifigCollection?apiKey=3-26cC-J3gUn-63bi&userHash=H@SH&params=%7B'notes':'Factory%20sealed%20with%20misprint%20on%20package'%7D&minifigNumber=567497"))
@@ -210,7 +209,7 @@ struct URLRequestTests {
         try URLCredentialStorage.shared.setAPIKey(nil)
     }
     
-    @Test func getUserMinifigNotes() throws {
+    @Test(.enabled(if: isKeychainTestable)) func getUserMinifigNotes() throws {
         try URLCredentialStorage.shared.setAPIKey(nil)
         try URLCredentialStorage.shared.setUserHash("H@SH", username: "toddheasley")
         #expect(throws: Error.self) {
@@ -233,3 +232,8 @@ struct URLRequestTests {
 }
 
 private let testAPIKey: String = "3-26cC-J3gUn-63bi"
+#if os(macOS)
+private let isKeychainTestable: Bool  = true
+#else
+private let isKeychainTestable: Bool  = false
+#endif

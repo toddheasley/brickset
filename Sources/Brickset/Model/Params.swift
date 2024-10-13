@@ -24,7 +24,7 @@ public struct GetSets: Params {
     public let wanted: Bool?
     public let updatedSince: Date?
     public let orderBy: Order?
-    public let pageSize: Int? // Default: 20; limit: 500
+    public let pageSize: Int? // Default: 50; limit: 500
     public let pageNumber: Int? // Default: 1
     public let extendedData: Bool?
     

@@ -7,11 +7,11 @@ public struct Sets: Decodable {
     }
     
     public struct Collection: Decodable {
-        public let owned: Bool
-        public let wanted: Bool
+        public let owned: Bool?
+        public let wanted: Bool?
         public let qtyOwned: Int?
         public let rating: Int?
-        public let notes: String
+        public let notes: String?
     }
     
     public struct Collections: Decodable {

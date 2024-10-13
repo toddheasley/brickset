@@ -27,7 +27,7 @@ struct URLCredentialTests {
 }
 
 struct URLCredentialStorageTests {
-    @Test func userHash() throws {
+    @Test(.enabled(if: isKeychainTestable)) func userHash() throws {
         try URLCredentialStorage.shared.setUserHash("H@SH", username: "toddheasley")
         #expect(URLCredentialStorage.shared.userHash?.username == "toddheasley")
         #expect(URLCredentialStorage.shared.userHash?.hash == "H@SH")
@@ -40,11 +40,9 @@ struct URLCredentialStorageTests {
         #expect(URLCredentialStorage.shared.userHash == nil)
     }
     
-    @Test func apiKey() throws {
-#if os(macOS)
+    @Test(.enabled(if: isKeychainTestable)) func apiKey() throws {
         try URLCredentialStorage.shared.setAPIKey("@P1K3Y", persistence: .permanent)
         #expect(URLCredentialStorage.shared.apiKey == "@P1K3Y")
-#endif
         try URLCredentialStorage.shared.setAPIKey("@P1K3Y", persistence: .none)
         #expect(URLCredentialStorage.shared.apiKey == nil)
         try URLCredentialStorage.shared.setAPIKey("@P1K3Y")
@@ -56,7 +54,13 @@ struct URLCredentialStorageTests {
 
 struct URLProtectionSpaceTests {
     @Test func brickset() {
-        #expect(URLProtectionSpace.brickset.receivesCredentialSecurely)
-        #expect(URLProtectionSpace.brickset.host == "api.brickset")
+        #expect(URLProtectionSpace.api.receivesCredentialSecurely)
+        #expect(URLProtectionSpace.api.host == "api.brickset")
     }
 }
+
+#if os(macOS)
+private let isKeychainTestable: Bool  = true
+#else
+private let isKeychainTestable: Bool  = false
+#endif

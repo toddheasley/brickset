@@ -49,13 +49,14 @@ struct URLQueryItemTests {
         }
     }
     
-    @Test func userHash() throws {
+    @Test(.enabled(if: isKeychainTestable)) func userHash() throws {
         try URLCredentialStorage.shared.setUserHash("H@SH", username: "toddheasley")
         #expect(try URLQueryItem.userHash() == URLQueryItem(name: "userHash", value: "H@SH"))
         try URLCredentialStorage.shared.setUserHash(nil)
         #expect(throws: Error.self) {
             _ = try URLQueryItem.userHash()
         }
+        #expect(try URLQueryItem.userHash(isRequired: false) == URLQueryItem(name: "userHash", value: ""))
     }
     
     @Test func apiKey() throws {
@@ -67,3 +68,9 @@ struct URLQueryItemTests {
         }
     }
 }
+
+#if os(macOS)
+private let isKeychainTestable: Bool  = true
+#else
+private let isKeychainTestable: Bool  = false
+#endif
