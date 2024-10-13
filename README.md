@@ -2,8 +2,8 @@
 
 [Brickset API version 3 documentation](https://brickset.com/article/52664/api-version-3-documentation)
 
-![](docs/bricks-cli.png)
-![](docs/bricks-cli-dark.png)
+![](docs/brick-cli.png)
+![](docs/brick-cli-dark.png)
 
 ### Supported Platforms
 
