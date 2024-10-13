@@ -2,6 +2,9 @@
 
 [Brickset API version 3 documentation](https://brickset.com/article/52664/api-version-3-documentation)
 
+![](docs/bricks-cli.png)
+![](docs/bricks-cli-dark.png)
+
 ### Supported Platforms
 
 Written in [Swift](https://developer.apple.com/swift) 6 for Apple stuff:
