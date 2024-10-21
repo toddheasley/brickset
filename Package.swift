@@ -10,17 +10,17 @@ let package: Package = Package(name: "Brickset", platforms: [
         .watchOS(.v11),
         .visionOS(.v2)
     ], products: [
+        .executable(name: "brickset-cli", targets: [
+            "BricksetCLI"
+        ]),
         .library(name: "Brickset", targets: [
             "Brickset"
-        ]),
-        .executable(name: "brick-cli", targets: [
-            "BrickCLI"
         ])
     ], dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", branch: "main")
     ], targets: [
         .target(name: "Brickset"),
-        .executableTarget(name: "BrickCLI", dependencies: [
+        .executableTarget(name: "BricksetCLI", dependencies: [
             .product(name: "ArgumentParser", package: "swift-argument-parser"),
             "Brickset"
         ]),
