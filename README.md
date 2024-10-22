@@ -2,13 +2,13 @@
 
 __Complete Swift interface to the [Brickset API version 3](https://brickset.com/article/52664/api-version-3-documentation)__
 
-Search [LEGO](https://www.lego.com) sets and minifigs by set number, name, era and theme. Look up set metadata, building instructions and images for almost every LEGO set. Even manage collections for individual Brickset accounts.
+Search [LEGO](https://www.lego.com) sets and minifigs by set number, name, era and theme. Look up set metadata, building instructions and images for almost every set. Even manage collections for individual Brickset accounts.
 
 ## Command-line interface
 
 ![](docs/brickset-cli.png)
 
-`Brickset` package includes an executable target, `brickset-cli`, a basic CLI for searching LEGO sets and reading building instructions. `brickset-cli` demonstrates using `Brickset` extensions to `Foundation` `URLCredential` and `URLSession` types for fine-grained control of secret storage and networking.
+`Brickset` package includes a basic CLI for searching LEGO sets and reading building instructions. `brickset-cli` demonstrates using the `Brickset` extensions to `URLCredential` and `URLSession` types in your own apps.
 
 ### CLI Examples
 
