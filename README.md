@@ -8,7 +8,7 @@ Search [LEGO](https://www.lego.com) sets and minifigs by set number, name, era a
 
 ![](docs/brickset-cli.png)
 
-`Brickset` package includes executable target `brickset-cli`, a basic command-line interface for searching LEGO sets and reading building instructions. `brickset-cli` demonstrates using `Brickset` extensions to `Foundation` `URLCredential` and `URLSession` types for fine-grained control of secret storage and networking.
+`Brickset` package includes an executable target, `brickset-cli`, a basic CLI for searching LEGO sets and reading building instructions. `brickset-cli` demonstrates using `Brickset` extensions to `Foundation` `URLCredential` and `URLSession` types for fine-grained control of secret storage and networking.
 
 ### CLI Examples
 

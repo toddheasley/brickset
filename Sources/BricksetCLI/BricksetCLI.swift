@@ -1,9 +1,9 @@
 import ArgumentParser
 import Brickset
+import Foundation
 #if os(macOS)
 import Cocoa
 #endif
-import Foundation
 
 @main
 struct BricksetCLI: AsyncParsableCommand {
