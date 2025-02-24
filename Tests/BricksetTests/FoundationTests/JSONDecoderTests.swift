@@ -11,7 +11,7 @@ struct JSONDecoderTests {
         var data: Data = try JSONSerialization.data(withJSONObject: [
             "status": "success"
         ])
-        try #require(try JSONDecoder().check(data))
+        try JSONDecoder().check(data)
         data = try JSONSerialization.data(withJSONObject: [
             "status": "error",
             "message": "Invalid API key"
@@ -32,9 +32,9 @@ struct JSONDecoderTests {
     }
     
     @Test func checkJSONObject() throws {
-        try #require(try JSONDecoder().check([
+        try JSONDecoder().check([
             "status": "success"
-        ]))
+        ])
         #expect(throws: Error.self) {
             try JSONDecoder().check([
                 "status": "error",

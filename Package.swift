@@ -17,7 +17,7 @@ let package: Package = Package(name: "Brickset", platforms: [
             "Brickset"
         ])
     ], dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser", branch: "main")
+        .package(url: "https://github.com/apple/swift-argument-parser", exact: "1.5.0")
     ], targets: [
         .target(name: "Brickset"),
         .executableTarget(name: "BricksetCLI", dependencies: [

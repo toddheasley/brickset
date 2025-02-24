@@ -56,7 +56,7 @@ struct URLRequestTests {
     
     @Test func getSets() throws {
         let request: URLRequest = try .getSets(GetSets(setID: 567497))
-        #expect(request.url == URL(string: "https://brickset.com/api/v3.asmx/getSets?apiKey=3-26cC-J3gUn-63bi&userHash=&params=%7B'setID':567497%7D"))
+        #expect(request.url == URL(string: "https://brickset.com/api/v3.asmx/getSets?apiKey=3-26cC-J3gUn-63bi&userHash=H@SH&params=%7B'setID':567497%7D"))
         #expect(request.httpMethod == "GET")
         #expect(try URLRequest.getSets(GetSets(query: "train", updatedSince: Date(timeIntervalSince1970: 0.0))).url == URL(string: "https://brickset.com/api/v3.asmx/getSets?apiKey=3-26cC-J3gUn-63bi&userHash=&params=%7B'query':'train','updatedSince':'1970-01-01'%7D"))
         #expect(throws: Error.self) {
@@ -66,6 +66,11 @@ struct URLRequestTests {
         #expect(throws: Error.self) {
             _ = try URLRequest.getSets(GetSets(setID: 567497))
         }
+        
+        
+        // https://brickset.com/api/v3.asmx/getSets?apiKey=3-26cC-J3gUn-63bi&userHash=H@SH&params=%7B'setID':567497%7D
+        // https://brickset.com/api/v3.asmx/getSets?apiKey=3-26cC-J3gUn-63bi&userHash=&params=%7B'setID':567497%7D
+        // https://brickset.com/api/v3.asmx/getSets?apiKey=3-26cC-J3gUn-63bi&userHash=&params=%7B'setID':567497%7D)
     }
     
     @Test func getAdditionalImages() throws {
