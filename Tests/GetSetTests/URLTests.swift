@@ -1,6 +1,6 @@
-import Testing
-@testable import Brickset
 import Foundation
+@testable import GetSet
+import Testing
 
 struct URLTests {
     @Test func api() {

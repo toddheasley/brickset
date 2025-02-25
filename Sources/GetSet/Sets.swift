@@ -6,19 +6,6 @@ public struct Sets: Decodable {
         public let imageURL: URL?
     }
     
-    public struct Collection: Decodable {
-        public let owned: Bool?
-        public let wanted: Bool?
-        public let qtyOwned: Int?
-        public let rating: Int?
-        public let notes: String?
-    }
-    
-    public struct Collections: Decodable {
-        public let ownedBy: Int?
-        public let wantedBy: Int?
-    }
-    
     public struct LEGOCom: Decodable {
         public struct Details: Decodable {
             public let retailPrice: Decimal?
@@ -49,12 +36,6 @@ public struct Sets: Decodable {
         public let UPC: String?
     }
     
-    public struct ExtendedData: Decodable {
-        public let notes: String?
-        public let tags: [String]?
-        public let description: String?
-    }
-    
     public let setID: Int
     public let number: String
     public let numberVariant: Int
@@ -69,11 +50,7 @@ public struct Sets: Decodable {
     public let minifigs: Int?
     public let image: Image
     public let bricksetURL: URL
-    public let collection: Collection
-    public let collections: Collections
     public let LEGOCom: LEGOCom
-    public let rating: Double
-    public let reviewCount: Int
     public let packagingType: String
     public let availability: String
     public let instructionsCount: Int
@@ -81,6 +58,4 @@ public struct Sets: Decodable {
     public let ageRange: AgeRange
     public let dimensions: Dimensions
     public let barcode: Barcodes
-    public let extendedData: ExtendedData
-    public let lastUpdated: Date
 }

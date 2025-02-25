@@ -1,5 +1,5 @@
+@testable import GetSet
 import Testing
-@testable import Brickset
 
 struct StringTests {
     

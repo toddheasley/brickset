@@ -1,6 +1,6 @@
-import Testing
-@testable import Brickset
 import Foundation
+@testable import GetSet
+import Testing
 
 struct ErrorTests {
     
@@ -19,8 +19,6 @@ struct ErrorTests {
         #expect(Error.allCases == [
             .noValidParameters,
             .parameterError,
-            .invalidUsernameOrPassword,
-            .invalidUserHash,
             .apiLimitExceeded,
             .invalidAPIKey
         ])
@@ -36,8 +34,6 @@ private let data: Data = """
 [
     "No valid parameters",
     "Parameter error",
-    "Invalid username or password",
-    "Invalid user hash",
     "API limit exceeded",
     "Invalid API key"
 ]

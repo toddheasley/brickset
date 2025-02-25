@@ -1,6 +1,6 @@
-import Testing
-@testable import Brickset
 import Foundation
+@testable import GetSet
+import Testing
 
 struct DateFormatterTests {
     @Test func params() {
@@ -8,10 +8,8 @@ struct DateFormatterTests {
         #expect(DateFormatter.params.timeZone.secondsFromGMT() == 0)
         #expect(DateFormatter.params.locale == .posix)
     }
-}
-
-struct LocaleTests {
-    @Test func posix() {
+    
+    @Test func posixLocale() {
         #expect(Locale.posix.identifier == "en_US_POSIX")
     }
 }

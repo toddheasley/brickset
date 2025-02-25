@@ -2,29 +2,29 @@
 
 import PackageDescription
 
-let package: Package = Package(name: "Brickset", platforms: [
+let package: Package = Package(name: "GetSet", platforms: [
         .macOS(.v15),
         .macCatalyst(.v18),
         .iOS(.v18),
-        .tvOS(.v18),
         .watchOS(.v11),
-        .visionOS(.v2)
+        .visionOS(.v2),
+        .tvOS(.v18)
     ], products: [
-        .executable(name: "brickset-cli", targets: [
-            "BricksetCLI"
+        .executable(name: "getset-cli", targets: [
+            "GetSetCLI"
         ]),
-        .library(name: "Brickset", targets: [
-            "Brickset"
+        .library(name: "GetSet", targets: [
+            "GetSet"
         ])
     ], dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", exact: "1.5.0")
     ], targets: [
-        .target(name: "Brickset"),
-        .executableTarget(name: "BricksetCLI", dependencies: [
+        .target(name: "GetSet"),
+        .executableTarget(name: "GetSetCLI", dependencies: [
             .product(name: "ArgumentParser", package: "swift-argument-parser"),
-            "Brickset"
+            "GetSet"
         ]),
-        .testTarget(name: "BricksetTests", dependencies: [
-            "Brickset"
+        .testTarget(name: "GetSetTests", dependencies: [
+            "GetSet"
         ])
     ])

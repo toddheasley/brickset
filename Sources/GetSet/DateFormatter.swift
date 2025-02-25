@@ -8,9 +8,7 @@ extension DateFormatter {
         let formatter: Self = Self()
         formatter.locale = .posix
         formatter.timeZone = .gmt
-        if let format, !format.isEmpty {
-            formatter.dateFormat = format
-        }
+        formatter.dateFormat = format ?? formatter.dateFormat
         return formatter
     }
 }

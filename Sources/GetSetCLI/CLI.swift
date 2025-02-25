@@ -1,12 +1,13 @@
 import ArgumentParser
-import Brickset
-import Foundation
-#if os(macOS)
+#if canImport(Cocoa)
 import Cocoa
+#else
+import Foundation
 #endif
+import GetSet
 
 @main
-struct BricksetCLI: AsyncParsableCommand {
+struct CLI: AsyncParsableCommand {
     struct Docs: AsyncParsableCommand {
         @Flag(name: .shortAndLong, help: "Open documentation in browser.") var open: Bool = false
         
@@ -29,7 +30,7 @@ struct BricksetCLI: AsyncParsableCommand {
                 print("Search query not found")
                 return
             }
-            let sets: ([Sets], Int?) = try await URLSession.shared.getSets(GetSets(query: query, pageSize: .maxPageSize))
+            let sets: ([Sets], Int?) = try await URLSession.shared.getSets(.query(query))
             let count: (Int, Int) = (sets.0.count, sets.1 ?? 0)
             print("\(count.0)\(count.1 > count.0 ? " (of \(count.1))" : "") \(count.0 != 1 ? "sets" : "set") matched \"\(query)\"\(count.0 > 0 ? ":" : "")")
             for set in sets.0 {
@@ -151,11 +152,12 @@ enum APIKeyStatus: Int, CaseIterable, CustomStringConvertible {
 
 extension AsyncParsableCommand {
     func open(_ open: Bool = false, url: URL) {
-#if os(macOS)
+#if canImport(Cocoa)
         if open {
             NSWorkspace.shared.open(url)
         }
-#endif
+#else
         print(url.absoluteString)
+#endif
     }
 }
