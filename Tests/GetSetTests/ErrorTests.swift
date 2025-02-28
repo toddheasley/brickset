@@ -32,9 +32,9 @@ struct ErrorTests {
 
 private let data: Data = """
 [
-    "No valid parameters",
-    "Parameter error",
+    "no valid parameters",
+    "parameter error",
     "API limit exceeded",
-    "Invalid API key"
+    "invalid API key"
 ]
 """.data(using: .utf8)!

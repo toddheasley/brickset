@@ -1,10 +1,10 @@
 import Foundation
 
 public enum Error: String, Swift.Error, Codable, CaseIterable, CustomStringConvertible {
-    case noValidParameters = "No valid parameters"
-    case parameterError = "Parameter error"
+    case noValidParameters = "no valid parameters"
+    case parameterError = "parameter error"
     case apiLimitExceeded = "API limit exceeded"
-    case invalidAPIKey = "Invalid API key"
+    case invalidAPIKey = "invalid API key"
     
     // MARK: CustomStringConvertible
     public var description: String { rawValue }

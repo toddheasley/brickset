@@ -1,9 +1,14 @@
 import Foundation
 
-public struct Sets: Decodable {
+public struct Sets: Decodable, CustomStringConvertible {
     public struct Image: Decodable {
         public let thumbnailURL: URL?
         public let imageURL: URL?
+        
+        public init(_ imageURL: URL) {
+            self.imageURL = imageURL
+            thumbnailURL = nil
+        }
     }
     
     public struct LEGOCom: Decodable {
@@ -19,9 +24,12 @@ public struct Sets: Decodable {
         public let DE: Details
     }
     
-    public struct AgeRange: Decodable {
+    public struct AgeRange: Decodable, CustomStringConvertible {
         public let min: Int?
         public let max: Int?
+        
+        // MARK: CustomStringConvertible
+        public var description: String { min != nil ? "\(min!)\(max != nil ? "-\(max!)" : "+")" : "" }
     }
     
     public struct Dimensions: Decodable {
@@ -58,4 +66,9 @@ public struct Sets: Decodable {
     public let ageRange: AgeRange
     public let dimensions: Dimensions
     public let barcode: Barcodes
+    
+    public var path: String { "\(number)-\(numberVariant)" }
+    
+    // MARK: CustomStringConvertible
+    public var description: String { "\(path) \(name)" }
 }

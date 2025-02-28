@@ -16,12 +16,9 @@ struct URLSessionTests {
     }
     
     @Test(.enabled(if: isTestable)) func getSets() async throws {
-        #expect(Bool(false))
-        /*
-        let params: GetSets = GetSets(query: "train", orderBy: .YearFromDESC, pageSize: 100)
-        let sets: ([Sets], Int?) = try await URLSession.shared.getSets(params)
+        let sets: ([Sets], Int?) = try await URLSession.shared.getSets(.query("cargo train"))
         #expect(!sets.0.isEmpty)
-        #expect(sets.0.count <= sets.1 ?? 0) */
+        #expect(sets.0.count <= sets.1 ?? 0)
     }
     
     @Test(.enabled(if: isTestable)) func getAdditionalImages() async throws {
