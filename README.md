@@ -10,31 +10,26 @@ Requires a free [Brickset API key](https://brickset.com/tools/webservices/reques
 
 ![](docs/getset-cli.png)
 
-`GetSet` includes a basic CLI that downloads data, images and building instructions for a specific set. `getset-cli` demonstrates using the `GetSet` extensions to `URLCredential` and `URLSession` in your own apps.
+`GetSet` includes a basic CLI that downloads data, images and building instructions for a given set number, name or keyword query. Demonstrates using the `GetSet` extensions to `URLCredential` and `URLSession` in your own apps.
 
 ### CLI Examples
 
-Set new Brickset API key:
+Set and validate Brickset API key:
 
 ```zsh
-% ./getset-cli key 3-26cC-J3gUn-63bi
-API key: •••••••••••••••••
+./getset-cli key 3-26cC-J3gUn-63bi
 ```
 
-View and/or validate the currently set key:
+Download images and instructions for a specific set:
 
 ```zsh
-% ./getset-cli key -s
-API key: 3-26cC-J3gUn-63bi
+./getset-cli get 60098-1 -d
 ```
 
-(Valid key appears green; invalid key shows red.)
-
-Delete key from keychain:
+Read the manual:
 
 ```zsh
-% ./getset-cli key -d
-API key not set
+./getset-cli -h
 ```
 
 ### Supported Platforms
