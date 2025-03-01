@@ -10,7 +10,7 @@ Requires a free [Brickset API key](https://brickset.com/tools/webservices/reques
 
 ![](docs/getset-cli.png)
 
-`GetSet` includes a basic CLI that downloads data, images and building instructions for a given set number, name or keyword query. Demonstrates using the `GetSet` extensions to `URLCredential` and `URLSession` in your own apps.
+`GetSet` includes a basic CLI that downloads data, images and building instructions for a given set number, name or keyword query. Demonstrates using the `GetSet` extensions to `URLCredential` and `URLSession`.
 
 ### CLI Examples
 

@@ -17,18 +17,8 @@ struct Index: CustomStringConvertible {
         html.append("<meta name=\"viewport\" content=\"initial-scale=1.0\">")
         html.append("<meta charset=\"UTF-8\">")
         html.append("<h1>\(set.path)<br><small>\(set.name)</small></h1>")
-        html.append("<table>")
-        html.append("    <tr>")
-        html.append("        <td><b>Ages \(set.ageRange)</b></td>")
-        html.append("    </tr>")
-        if let pieces: Int = set.pieces {
-            html.append("    <tr>")
-            html.append("        <td>\(pieces) pcs/pzs</td>")
-            html.append("    </tr>")
-        }
-        html.append("</table>")
+        html.append("<p><b>Ages \(set.ageRange)</b><br>\(set.pieces ?? 0) pcs/pzs</p>")
         if !images.isEmpty {
-            html.append("<h2>Images</h2>")
             html.append("<section>")
             html.append("    <table>")
             html.append("        <tr>")
@@ -41,40 +31,13 @@ struct Index: CustomStringConvertible {
             html.append("</section>")
         }
         if !instructions.isEmpty {
-            html.append("<h2>Building Instructions</h2>")
             html.append("<ul>")
             for instructions in self.instructions {
                 html.append("    <li><a href=\"\(instructions.URL.absoluteString)\">\(instructions)</a></li>")
             }
             html.append("</ul>")
         }
-        html.append("<h2>Details</h2>")
-        html.append("<table>")
-        html.append("    <tr>")
-        html.append("        <td>Theme:</td>")
-        if let subtheme: String = set.subtheme, !subtheme.isEmpty {
-            html.append("        <td>\(set.theme) \(subtheme)</td>")
-        } else {
-            html.append("        <td>\(set.theme)</td>")
-        }
-        html.append("    </tr>")
-        html.append("    <tr>")
-        html.append("        <td>Released:</td>")
-        html.append("        <td>\(set.year)</td>")
-        html.append("    </tr>")
-        if let minifigs: Int = set.minifigs, minifigs > 0 {
-            html.append("    <tr>")
-            html.append("        <td>Minifigs:</td>")
-            html.append("        <td>\(minifigs)</td>")
-            html.append("    </tr>")
-        }
-        html.append("    <tr>")
-        html.append("        <td>Brickset ID:</td>")
-        html.append("        <td><a href=\"\(set.bricksetURL.absoluteString)\">\(set.setID)</a></td>")
-        html.append("    </tr>")
-        
-        
-        html.append("</table>")
+        html.append("<p><a href=\"\(set.bricksetURL.absoluteString)\">\(set.bricksetURL.string)</a></p>")
         html.append("<style>")
         html.append(style)
         html.append("</style>")
@@ -91,30 +54,27 @@ struct Index: CustomStringConvertible {
     var description: String { self.set.description }
 }
 
+extension URL {
+    var string: String { absoluteString.components(separatedBy: "//").last! }
+}
+
 private let style: String = """
     
     :root {
         color-scheme: light dark;
-        -webkit-text-size-adjust: none;
     }
     
-    /*
     body {
         font: 1em ui-sans-serif, sans-serif;
-    } */
+    }
     
     img {
-        max-height: 384px;
+        max-height: 320px;
     }
     
     section {
-        border: 2.5px solid;
-        max-width: 768px;
+        border: 1px solid gray;
         overflow-x: scroll;
     }
     
-    section table {
-        border-spacing: 1em;
-    }
-
 """
