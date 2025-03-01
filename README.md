@@ -1,37 +1,35 @@
-# `Brickset`
+# `GetSet`
 
-__Complete Swift interface to the [Brickset API version 3](https://brickset.com/article/52664/api-version-3-documentation)__
+__Get LEGO® set info, images and instructions from [Brickset](https://brickset.com/article/52664/api-version-3-documentation)__
 
-Search [LEGO](https://www.lego.com) sets and minifigs by set number, name, era and theme. Look up set metadata, building instructions and images for almost every set. Even manage collections for individual Brickset accounts.
+`GetSet` extends `URLSession` with async/await functions that return deserialized, modeled set info and media URLs. Search sets by set number, name or keyword query.
+
+Requires a free [Brickset API key](https://brickset.com/tools/webservices/requestkey), persisted safely in the system keychain.
 
 ## Command-line interface
 
-![](docs/brickset-cli.png)
+![](docs/getset-cli.png)
 
-`Brickset` package includes a basic CLI for searching LEGO sets and reading building instructions. `brickset-cli` demonstrates using the `Brickset` extensions to `URLCredential` and `URLSession` types in your own apps.
+`GetSet` includes a basic CLI that downloads data, images and building instructions for a given set number, name or keyword query. Demonstrates using the `GetSet` extensions to `URLCredential` and `URLSession`.
 
 ### CLI Examples
 
-```zsh
-% ./brickset-cli key 3-26cC-J3gUn-63bi
-API key: •••••••••••••••••
-```
+Set and validate Brickset API key:
 
 ```zsh
-% ./brickset-cli search "heavy haul"  
-2 sets matched "heavy haul":
-➤  7998 Heavy Hauler
-➤ 60098 Heavy-Haul Train
+./getset-cli key 3-26cC-J3gUn-63bi
 ```
 
+Download images and instructions for a specific set:
+
 ```zsh
-% ./brickset-cli build 60098 -o       
-https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6125616.pdf
-https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6125620.pdf
-https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6125622.pdf
-https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6201488.pdf
-https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6201493.pdf
-https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6201498.pdf
+./getset-cli get 60098-1 -d
+```
+
+Read the manual:
+
+```zsh
+./getset-cli -h
 ```
 
 ### Supported Platforms
